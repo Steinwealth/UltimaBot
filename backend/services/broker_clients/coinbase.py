@@ -3,6 +3,7 @@ import hmac
 import hashlib
 import base64
 import requests
+import json
 from typing import Dict, List
 
 BASE_URL = "https://api.exchange.coinbase.com"
@@ -22,6 +23,12 @@ def authenticate(api_key: str, api_secret: str, passphrase: str, method: str, re
         "CB-ACCESS-PASSPHRASE": passphrase,
         "Content-Type": "application/json"
     }
+
+
+def validate_credentials(api_key: str, api_secret: str, passphrase: str) -> bool:
+    headers = authenticate(api_key, api_secret, passphrase, "GET", "/accounts")
+    response = requests.get(f"{BASE_URL}/accounts", headers=headers)
+    return response.status_code == 200
 
 
 def get_account_info(api_key: str, api_secret: str, passphrase: str) -> Dict:
@@ -44,7 +51,7 @@ def get_account_info(api_key: str, api_secret: str, passphrase: str) -> Dict:
 def get_live_market_data(symbols: List[str], api_key: str, api_secret: str, passphrase: str) -> Dict:
     market_data = {}
     for symbol in symbols:
-        cb_symbol = symbol.replace("-", "-").upper()  # ensure format
+        cb_symbol = symbol.replace("-", "-").upper()
         headers = authenticate(api_key, api_secret, passphrase, "GET", f"/products/{cb_symbol}/ticker")
         response = requests.get(f"{BASE_URL}/products/{cb_symbol}/ticker", headers=headers)
         if response.status_code == 200:
@@ -57,3 +64,21 @@ def get_live_market_data(symbols: List[str], api_key: str, api_secret: str, pass
         else:
             market_data[symbol] = {"error": f"Failed to fetch: {response.status_code}"}
     return market_data
+
+
+def place_order(api_key: str, api_secret: str, passphrase: str, symbol: str, side: str, size: float, order_type: str = "market") -> Dict:
+    request_path = "/orders"
+    method = "POST"
+    body_dict = {
+        "type": order_type,
+        "side": side,
+        "product_id": symbol.upper(),
+        "size": str(size)
+    }
+    body = json.dumps(body_dict)
+    headers = authenticate(api_key, api_secret, passphrase, method, request_path, body)
+    response = requests.post(f"{BASE_URL}{request_path}", headers=headers, data=body)
+    if response.status_code == 200 or response.status_code == 201:
+        return response.json()
+    else:
+        return {"error": f"Order failed: {response.status_code} - {response.text}"}
