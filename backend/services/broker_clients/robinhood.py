@@ -5,12 +5,18 @@ BASE_URL = "https://api.robinhood.com"
 
 
 def login(username: str, password: str) -> Dict:
-    # Simulated login (Robinhood uses OAuth and device tokens; this requires a headless browser or token)
-    return {
-        "access_token": "demo-token",
-        "refresh_token": "demo-refresh",
-        "account_id": "123456789"
+    url = f"{BASE_URL}/oauth2/token/"
+    payload = {
+        "grant_type": "password",
+        "client_id": "c82SH0WZOsabOXGP2sxqcj34FxkvfnWR",  # Robinhood mobile client_id (public)
+        "scope": "internal",
+        "username": username,
+        "password": password,
     }
+    response = requests.post(url, data=payload)
+    if response.status_code == 200:
+        return response.json()
+    return {"error": f"Login failed: {response.status_code}"}
 
 
 def get_account_info(access_token: str) -> Dict:
@@ -26,7 +32,7 @@ def get_account_info(access_token: str) -> Dict:
             "used_margin_pct": 0.13,
             "open_drawdown_pct": 0.02
         }
-    return {"error": f"Robinhood login failed: {response.status_code}"}
+    return {"error": f"Robinhood account retrieval failed: {response.status_code}"}
 
 
 def get_live_market_data(symbols: List[str], access_token: str) -> Dict:
@@ -45,3 +51,31 @@ def get_live_market_data(symbols: List[str], access_token: str) -> Dict:
         else:
             market_data[symbol] = {"error": f"Quote error: {response.status_code}"}
     return market_data
+
+
+def place_order(access_token: str, account_url: str, symbol: str, quantity: int, side: str) -> Dict:
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    }
+    instrument_url = f"{BASE_URL}/instruments/?symbol={symbol}"
+    inst_res = requests.get(instrument_url, headers=headers)
+    if inst_res.status_code != 200 or not inst_res.json().get("results"):
+        return {"error": "Unable to retrieve instrument URL."}
+
+    instrument = inst_res.json()["results"][0]["url"]
+    payload = {
+        "account": account_url,
+        "instrument": instrument,
+        "symbol": symbol,
+        "type": "market",
+        "time_in_force": "gfd",
+        "trigger": "immediate",
+        "price": None,
+        "quantity": quantity,
+        "side": side.lower()
+    }
+    response = requests.post(f"{BASE_URL}/orders/", json=payload, headers=headers)
+    if response.status_code in [200, 201]:
+        return response.json()
+    return {"error": f"Order failed: {response.status_code} - {response.text}"}
