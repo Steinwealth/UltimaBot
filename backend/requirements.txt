@@ -1,0 +1,28 @@
+# === Core Framework ===
+fastapi
+uvicorn
+
+# === Auth and API ===
+requests
+oauthlib
+requests-oauthlib
+python-dotenv
+
+# === Data and Computation ===
+numpy
+pandas
+
+# === Logging and Scheduling ===
+loguru
+apscheduler
+
+# === Dev Tools ===
+pytest
+httpx
+
+# === Optional: Interactive Brokers Gateway Client ===
+ib_insync
+
+# === Optional: Binance/Kraken/Coinbase SDKs ===
+binance
+ccxt
