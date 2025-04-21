@@ -1,6 +1,7 @@
 import time
 import threading
 from typing import Callable, List
+from utils.logger import log_event, log_error
 
 
 class ScheduledTask:
@@ -12,17 +13,20 @@ class ScheduledTask:
         self._stop_flag = False
 
     def start(self):
+        log_event(f"[Scheduler] Starting task: {self.name}")
         self.thread.start()
 
     def stop(self):
+        log_event(f"[Scheduler] Stopping task: {self.name}")
         self._stop_flag = True
 
     def _run_loop(self):
         while not self._stop_flag:
             try:
+                log_event(f"[Scheduler] Running task: {self.name}")
                 self.action()
             except Exception as e:
-                print(f"[Scheduler] Task {self.name} error: {e}")
+                log_error(f"[Scheduler] Task {self.name} error: {e}")
             time.sleep(self.interval)
 
 
