@@ -1,3 +1,5 @@
+# backend/engines/discovery_engine.py
+
 from typing import List, Tuple
 from engines.confidence_engine import calculate_confidence
 import random
@@ -23,14 +25,14 @@ DISCOVERY_STRATEGIES = {
     "micro-cap": lambda: CRYPTO_SYMBOLS[8:]
 }
 
-def get_symbols(discovery_methods: List[str] = ["original"]) -> List[str]:
+def get_symbols(discovery_methods: List[str] = ["original"]):
     symbols = set()
     for method in discovery_methods:
         if method in DISCOVERY_STRATEGIES:
             symbols.update(DISCOVERY_STRATEGIES[method]())
     return sorted(symbols)
 
-def get_stock_symbols() -> List[str]:
+def get_stock_symbols():
     return STOCK_SYMBOLS
 
 # === STOCK STRATEGY FILTERS ===
@@ -120,12 +122,9 @@ def ipo_strategy(market_data: dict) -> List[str]:
                 continue
         if (
             ipo_date and ipo_date >= three_years_ago and
-            data.get("avg_volume", 0) >= 500_000 and
-            data.get("rsi", 0) >= 60 and
-            data.get("macd", 0) > 0 and
-            data.get("macd_hist", 0) > 0 and
-            data.get("price", 0) > data.get("ema_50", 0) and
-            data.get("bullish_pattern", False)
+            data.get("sales_growth_qoq", 0) > 30 and
+            data.get("price_change", "") == "up" and
+            data.get("avg_volume", 0) >= 500_000
         ):
             result.append(symbol)
     return result
@@ -153,3 +152,4 @@ def get_ranked_stock_symbols(strategies: List[str], market_data: dict, top_n: in
 
     ranked.sort(key=lambda x: x[1], reverse=True)
     return ranked[:top_n]
+
