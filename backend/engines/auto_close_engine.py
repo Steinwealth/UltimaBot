@@ -1,3 +1,5 @@
+# backend/engines/auto_close_engine.py
+
 from typing import Dict
 
 def should_close_trade(
