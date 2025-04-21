@@ -2,7 +2,7 @@
 
 from models.hexacoin import HexacoinModel
 from models.antimatter import AntimatterModel
-from models.alphlacoin_v4 import AlphlacoinV4Model
+from models.alphacoin import AlphacoinModel
 from models.dianastone import DianastoneModel
 from models.radiant import RadiantModel
 from models.titanfusion import TitanFusionModel
@@ -12,8 +12,8 @@ def load_model(model_name: str):
         return HexacoinModel()
     elif model_name == "antimatter":
         return AntimatterModel()
-    elif model_name == "alphlacoin_v4":
-        return AlphlacoinV4Model()
+    elif model_name == "alphacoin":
+        return AlphacoinModel()
     elif model_name == "dianastone":
         return DianastoneModel()
     elif model_name == "radiant":
