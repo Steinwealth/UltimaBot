@@ -1,5 +1,3 @@
-# backend/models/model_loader.py
-
 from models.hexacoin import HexacoinModel
 from models.antimatter import AntimatterModel
 from models.alphacoin import AlphacoinModel
