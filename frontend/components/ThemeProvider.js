@@ -30,10 +30,14 @@ export function ThemeProvider({ children }) {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className={theme + ' transition-colors duration-300 relative overflow-hidden'}>
         {isTransitioning && (
-          <div className="fixed inset-0 z-50 pointer-events-none transition-opacity duration-500 backdrop-blur-md" style={{
-            background: 'radial-gradient(circle at center, rgba(255,255,255,0.4), rgba(0,0,0,0.3))',
-            opacity: 0.7
-          }} />
+          <div
+            className="fixed inset-0 z-50 pointer-events-none transition-opacity duration-500 backdrop-blur-md"
+            style={{
+              background:
+                'radial-gradient(circle at center, rgba(255,255,255,0.4), rgba(0,0,0,0.3))',
+              opacity: 0.7,
+            }}
+          />
         )}
         {children}
       </div>
