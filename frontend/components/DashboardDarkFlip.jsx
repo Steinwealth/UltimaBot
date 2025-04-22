@@ -1,5 +1,3 @@
-// frontend/components/DashboardDarkFlip.jsx
-
 import React, { useState } from 'react'
 import { FiSettings, FiSun, FiRefreshCw } from 'react-icons/fi'
 import { useTheme } from '../context/ThemeProvider'
@@ -29,7 +27,8 @@ const DashboardDarkFlip = () => {
         side: 'buy',
         type: 'market'
       })
-      openPositions.push({ symbol: trade.symbol, gain: '+5.9%', tp: 50000, sl: 48000 })
+      openPositions.push({ symbol: trade.symbol, gain: '+5.9%', tp: 50000, sl: 48000 });
+      import('./MarqueeBar').then(mod => mod.triggerMarqueeMessage(`Test Trade: ${trade.symbol} opened!`));
     } catch (err) {
       console.error(err)
     }
