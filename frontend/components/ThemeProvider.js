@@ -3,24 +3,22 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark'); // Default theme
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('ultima-theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.add(savedTheme);
-    } else {
-      document.documentElement.classList.add('dark');
-    }
+    const preferred = savedTheme || 'dark';
+    setTheme(preferred);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(preferred);
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.remove(theme);
-    document.documentElement.classList.add(newTheme);
-    setTheme(newTheme);
-    localStorage.setItem('ultima-theme', newTheme);
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(next);
+    localStorage.setItem('ultima-theme', next);
   };
 
   return (
