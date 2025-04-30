@@ -1,0 +1,47 @@
+
+
+✅ Recommended EC2 Setup for Live Trading with Ultima Bot
+Requirement
+Optimal Choice
+Instance Type
+c7g.large (Graviton-based, compute-optimized)
+vCPUs
+2
+RAM
+4 GB
+Storage
+50–100 GB (EBS gp3 SSD)
+OS
+Ubuntu 22.04 LTS
+Network
+Enable Elastic IP + low-latency region
+Region
+Closest to major exchange (e.g., us-east-1 for NYSE/Robinhood/E*TRADE)
+Cost (on-demand)
+~$0.09/hour ≈ $65/month
+Cost (reserved)
+~$38/month (1-year reserved)
+Cost (spot)
+~$25–30/month (if acceptable downtime risk)
+
+
+🧠 Why c7g.large?
+	•	Uses Graviton3 ARM architecture → cheaper, faster, lower latency
+	•	Compute-optimized for fast model execution (TP/SL forecasting, confidence logic)
+	•	Excellent for scaling and trading concurrency (supports multi-broker routing)
+	•	Can run:
+	◦	FastAPI backend
+	◦	Live broker APIs (Coinbase, Robinhood, etc.)
+	◦	Radiant, Antimatter, Dianastone joblib models
+	◦	WebSocket streaming and trade loops
+S3 Backup
+Store trade history, models
+~$0.01/GB
+
+
+
+
+
+
+
+
