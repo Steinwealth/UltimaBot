@@ -1,0 +1,81 @@
+
+
+Account Information : 
+Broker Name, ID #, Balance, Margin %, [Model Dropdown Menu] [Trade Model] [Start Trading] *Active Trading
+Broker Name, ID #, Balance, Margin %, [Model Dropdown Menu] [Trade Model] [Start Trading] *Active Trading
+Broker Name, ID #, Balance, Margin %, [Model Dropdown Menu] [Trade Model] [Start Trading] *Active Trading
+Broker Name, ID #, Balance, Margin %, [Model Dropdown Menu] [Trade Model] [Start Trading] *Active Trading
+
+Dropdown menu for each model. Sort by best performance first. New untraded models Above and Start on Best performance model depending to least.
+
+[Trade Model] button to lock-in and confirm the selected model. When [Trade Model] is selected, the button dims and turns into a Lock symbol. The dropdown menu is locked and the selected model is paired to the broker login. Push or select the [Trade Model] button when it is dim with a Locked symbol again to deselect the model and allow navigation of the dropdown menu to select a new model. The Strategy panel updates the model information strategy data when the model is selected with [Trade Model]. Deselecting will unpair data from the Strategy panel. 
+
+The [Start Trading] button is dim until a model is pared to the broker login. When a model is paired with [Trade Model], [Start Trading] becomes lit to select. Then select [Start Trading] to activate auto-trading the Discovery Engine symbols to the paired model, to broker login account api. *Active Trading LED light is lit and says Active Trading when the [Start Trading] button is pressed and trading is activated on broker account api. [Start Trading] become [Stop Session] button when trading is activated. 
+
+
+Ultima Bot Storage Sizing Estimate (High Volume Scenario):
+
+Metric	Estimate
+Trades per day (4 brokers)	120–320 trades.
+Data per trade (logs + metrics)	~2KB–5KB per trade (entry/exit, risk, P&L, metrics).
+Daily storage growth	240KB–1.5MB/day.
+Monthly storage growth	7MB–45MB/month.
+Annual growth (uncompressed)	~85MB–540MB/year.
+Market Data Snapshots	Optional: +1–3KB per trade.
+Total annual (logs + market data)	~100MB–1GB/year.
+Low-mid scale (<1GB/year) for log data.
+
+Market data retention or multi-year history could scale this to 2–5GB/year.
+
+$1 Million - $30 Million Volume
+
+
+2. Super Leverage Strategy
+Description: Targets ultra-high volatility leveraged ETFs for aggressive momentum trading.
+Filter Criteria:
+	•	Symbol in: TQQQ, 5QQQ, SOXL, GLDM, SPYU, SPXL, MSTX, BITX, SHNY, UGL, DGP
+	•	1-minute volume surge (30%+ over previous avg)
+	•	RSI ≥ 55 and trending upward
+	•	MACD crossover within last 15 minutes
+	•	ATR > 2.5
+	•	Price volatility ≥ 3% in last 30 minutes
+
+3. Top Volume Strategy
+Description: Prioritizes stocks with the highest trading volume and strong price action.
+Filter Criteria:
+	•	Top 50 stocks by intraday volume
+	•	Volume ≥ 2× daily average
+	•	RSI ≥ 50 and rising
+	•	MACD crossover in last 20 mins
+	•	ATR ≤ 3.0
+	•	Exclude penny stocks (< $2)
+
+4. Large Cap Strategy
+Description: Focuses on stable, high-market-cap stocks with strong institutional support.
+Filter Criteria:
+	•	Market Cap ≥ $50B
+	•	Price > $100
+	•	RSI between 50–70
+	•	MACD histogram > 0
+	•	Volume increasing day-over-day
+	•	ATR ≤ 2.0 (to ensure low volatility)
+
+5. 3-Year IPO Strategy
+Description: Targets IPO stocks within their first 3 years, banking on explosive growth trends.
+Filter Criteria:
+	•	IPO date within last 3 years
+	•	Avg volume ≥ 500K
+	•	RSI ≥ 60 and trending
+	•	MACD positive and widening
+	•	Price above 50-day EMA
+	•	Bullish engulfing candle or breakout pattern
+
+6. Freshman Strategy
+Description: Targets small-cap, high-volatility tickers with breakout potential.
+Filter Criteria:
+	•	Market Cap < $2B
+	•	Volume spike ≥ 300% intraday
+	•	RSI ≥ 65
+	•	MACD + divergence confirmed
+	•	ATR > 3.5
+	•	At or above daily high
