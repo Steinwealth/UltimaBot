@@ -1,52 +1,68 @@
-/ultima-bot
-├── /backend
-│   ├── /routers
-│   │   ├── place_order.py            # Route for placing trades
-│   │   ├── websocket_marquee.py      # WebSocket route for broadcasting messages
-│   │   └── (other routes...)
-│   ├── /engines
-│   │   ├── auto_close_engine.py      # Logic for closing trades (TP/SL)
-│   │   ├── auto_close_scheduler.py  # Scheduler for monitoring open trades
-│   │   ├── compounding_engine.py     # Logic for compounding trades based on streaks
-│   │   ├── confidence_engine.py     # Confidence scoring system
-│   │   ├── forecast_engine.py       # TP/SL prediction logic
-│   │   ├── strategy_engine.py       # Strategy execution logic
-│   │   └── risk_engine.py           # Risk management (position sizing, drawdown)
-│   ├── /services
-│   │   ├── broker_clients
-│   │   │   ├── place_order.py       # Broker-specific order execution logic
-│   │   │   ├── coinbase_place.py    # Coinbase order handling
-│   │   │   ├── etrade_place.py      # E*TRADE order handling
-│   │   │   └── (other brokers...)
-│   ├── /utils
-│   │   └── logger.py                # Logging utility for backend
-│   ├── /models
-│   │   ├── trade_model.py           # Data models for trades, brokers, etc.
-│   │   └── (other models...)
-│   └── main.py                      # FastAPI entry point (backend setup)
-├── /frontend
-│   ├── /components
-│   │   ├── DashboardDarkFlip.jsx    # Dashboard for Dark theme (Flip functionality)
-│   │   ├── DashboardLightFlip.jsx   # Dashboard for Light theme (Flip functionality)
-│   │   ├── MarqueeBar.jsx           # Scrolling Marquee component
-│   │   ├── TradeStatusCard.jsx      # Displays live trade data (TP/SL tracking)
-│   │   └── (other components...)
-│   ├── /context
-│   │   └── ThemeProvider.js         # Manages theme state (Light/Dark)
-│   ├── /hooks
-│   │   ├── useTradePanels.js       # Hook for managing trade panels (Open/History)
-│   │   ├── useBrokers.js           # Hook for managing brokers (login, info)
-│   │   ├── useToasts.js            # Toasts and Marquee message handling
-│   │   └── useLiveTradeDisplay.js  # Handles real-time price and confidence updates
-│   ├── /services
-│   │   ├── submitTrade.js           # Function for submitting trades (frontend)
-│   │   └── (other services...)
-│   ├── /assets
-│   │   ├── /images
-│   │   └── /icons
-│   ├── App.js                       # Main app component (Frontend setup)
-│   └── index.js                     # React entry point
-├── .env                             # Environment variables (API keys, secrets, etc.)
-├── requirements.txt                 # Backend dependencies
-├── package.json                     # Frontend dependencies and scripts
-└── README.md                        # Project documentation
+# Ultima Bot
+
+Ultima Bot is a full-stack AI-powered trading automation system for both cryptocurrency and stock markets. It integrates a multi-model backend with a responsive frontend UI to monitor, manage, and optimize trades in real time.
+
+## Features
+- Multi-broker support: Coinbase, E*TRADE, Binance, Kraken, and more.
+- AI models for both crypto and stock trading.
+- Confidence-based trade execution with power scaling.
+- Easy Mode, Hard Mode, and Hero Mode configurations.
+- Theme support: Light PlayStation / Dark Xbox themes.
+- Real-time market sentiment, open trades, and trade history.
+- Persistent settings for sound, mode, and themes.
+
+## Technologies
+- **Frontend**: Next.js, TailwindCSS, shadcn/ui, Framer Motion
+- **Backend**: FastAPI, PostgreSQL, SQLAlchemy, WebSockets
+- **AI Models**: joblib serialized models (Alphacoin, Antimatter, Hexacoin, Dianastone, Radiant, etc.)
+- **Docker**: For containerized multi-service deployment
+
+## Setup
+
+### Prerequisites
+- Docker & Docker Compose
+- Node.js (for standalone frontend development)
+
+### Local Development
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/ultima-bot.git
+   cd ultima-bot
+   ```
+
+2. Start with Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+   This runs:
+   - Backend at `http://localhost:8000`
+   - Frontend at `http://localhost:3000`
+   - PostgreSQL database at `localhost:5432`
+
+3. Visit `http://localhost:3000` to access Ultima Bot.
+
+### Frontend Development Only
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend Development Only
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn backend.main:app --reload
+```
+
+## Directory Structure
+```
+ultima-bot/
+├── backend/          # FastAPI backend
+├── frontend/         # Next.js frontend
+├── docker-compose.yml
+├── README.md
+```
+
+## License
+MIT
