@@ -26,7 +26,9 @@ Ultima Bot is a full-stack AI-powered trading automation system for both cryptoc
 ### Local Development
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/ultima-bot.git
+   git clone https://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@github.com/Steinweath/UltimaBot.git
+
+   
    cd ultima-bot
    ```
 
