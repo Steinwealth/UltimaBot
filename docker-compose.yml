@@ -1,28 +1,37 @@
-version: '3.9'
+version: "3.9"
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+    container_name: ultima-backend
     ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
+      - "8080:8080"
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/ultima
     depends_on:
       - db
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080
+    restart: always
+    networks:
+      - ultima-net
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+    container_name: ultima-frontend
     ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
+      - "80:80"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - VITE_API_URL=https://ultima-api.yourdomain.com
+    command: ["npm", "run", "build"]
+    restart: always
+    networks:
+      - ultima-net
 
   db:
     image: postgres:15
+    container_name: ultima-db
     restart: always
     ports:
       - "5432:5432"
@@ -32,6 +41,12 @@ services:
       POSTGRES_DB: ultima
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - ultima-net
 
 volumes:
   pgdata:
+
+networks:
+  ultima-net:
+    driver: bridge
