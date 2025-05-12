@@ -62,7 +62,7 @@ async def startup_event():
     start_scheduler()  # ⏰ Launch scheduler tasks
     asyncio.create_task(run_trading_cycle())
 
-    logging.info("✅ Ultima Bot backend initialized and running.")
+    logging.info("Ultima Bot backend initialized and running.")
 
 # -------------------------
 # Entrypoint for Uvicorn
