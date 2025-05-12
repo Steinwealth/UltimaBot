@@ -1,0 +1,20 @@
+# cloudrun.yaml – GCP Cloud Run deployment config for Ultima Bot
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ultima-bot-api
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/YOUR_PROJECT_ID/ultima-bot-api
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENVIRONMENT
+              value: "production"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+      timeoutSeconds: 300
+      containerConcurrency: 80
