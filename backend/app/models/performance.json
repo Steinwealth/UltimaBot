@@ -1,0 +1,54 @@
+# backend/app/models/performance.json
+
+{
+  "Antimatter": {
+    "performance": 95.1,
+    "last_trained": "2025-05-01"
+  },
+  "Hexacoin": {
+    "performance": 92.3,
+    "last_trained": "2025-04-28"
+  },
+  "Radiant": {
+    "performance": 91.2,
+    "last_trained": "2025-04-22"
+  },
+  "Alphacoin": {
+    "performance": 89.7,
+    "last_trained": "2025-04-24"
+  },
+  "Cryptanium": {
+    "performance": 88.9,
+    "last_trained": "2025-04-20"
+  },
+  "Cryptomite": {
+    "performance": 86.4,
+    "last_trained": "2025-04-18"
+  },
+
+  "Dianastone": {
+    "performance": 93.8,
+    "last_trained": "2025-04-30"
+  },
+  "TitanFusion": {
+    "performance": 90.6,
+    "last_trained": "2025-04-26"
+  },
+  "Einsteinium": {
+    "performance": 87.5,
+    "last_trained": "2025-04-19"
+  },
+  "Wolvervine": {
+    "performance": 85.0,
+    "last_trained": "2025-04-16"
+  },
+  "SophiaPrimeX": {
+    "performance": 84.2,
+    "last_trained": "2025-04-17"
+  },
+  "Californium": {
+    "performance": 83.5,
+    "last_trained": "2025-04-15"
+  }
+}
+  
